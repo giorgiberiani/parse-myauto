@@ -2,10 +2,56 @@ import scrapy
 import requests
 import csv
 from .helper import Helper
+import json
 
 
 class MyAutoScraper(Helper, scrapy.Spider):
     name = 'myauto'
+
+    file_path = '/home/alo/Desktop/Data/myauto_cars.csv'
+
+
+    with open(file_path, 'w') as csvfile:
+        fieldnames = ['Customs',
+                      'Manufacturer',
+                      'Model',
+                      'Year',
+                      'Category',
+                      'Fuel Type',
+                      'Engine Volume',
+                      'Mileage',
+                      'Cylinders',
+                      'Geaer Type',
+                      'Drive Wheels',
+                      'Doors',
+                      'Wheel',
+                      'Color',
+                      'Interior Color',
+                      'Airbags',
+                      'ABS',
+                      'El Windows',
+                      'Air Condintioner',
+                      'Climate System',
+                      'Leather Interior',
+                      'Disks',
+                      'Navigation System',
+                      'Central Lock',
+                      'Hatch',
+                      'Alarm',
+                      'Board Computer',
+                      'Hydraulics',
+                      'Anti skid',
+                      'Chair Warming',
+                      'Parking Control',
+                      'Rear View Camera',
+                      'Price']
+
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+
+
+    file_path = '/home/alo/Desktop/Data/cars.csv'
+    myFile = open(file_path, 'w')
 
     def start_requests(self):
         start_url = 'https://www.myauto.ge/ka/search/?stype=0&' \
@@ -18,7 +64,7 @@ class MyAutoScraper(Helper, scrapy.Spider):
 
         urls = []
 
-        for i in range(1,5):
+        for i in range(1,10):
             urls.append('https://www.myauto.ge/ka/search/?stype=0&'
                         'currency_id=3&det_search=0&ord=1&category_id=m0&page={}'.format(i))
 
@@ -33,6 +79,8 @@ class MyAutoScraper(Helper, scrapy.Spider):
 
 
     def parse_content(self, response):
+
+
         price = response.xpath('//*[@class="car-price " or @class="car-price resized" or @class="no-fixed-price"]/text()').extract_first()
         manufacturer = response.xpath('//*[@class="detail-car-table"]//tr[1]/th[1]/div[2]//text()').extract_first()
         model = response.xpath('//*[@class="detail-car-table"]//tr[2]/th[1]/div[2]//text()').extract_first()
@@ -49,6 +97,7 @@ class MyAutoScraper(Helper, scrapy.Spider):
         color = response.xpath('//*[@class="detail-car-table"]//tr[13]/th[1]/div[2]//text()').extract_first()
         interior_color = response.xpath('//*[@class="detail-car-table"]//tr[14]/th[1]/div[2]//text()').extract_first()
         airbags = response.xpath('//*[@class="detail-car-table"]//tr[15]/th[1]/div[2]//text()').extract_first()
+        customs = response.xpath('//*[@class="levy"]//text()').extract_first()
 
         if response.xpath('//*[@class="detail-car-table"]//tr[1]/th[2]/div[2]/i[@class="fa fa-check"]'):
             abs = True
@@ -130,75 +179,16 @@ class MyAutoScraper(Helper, scrapy.Spider):
         else:
             rear_view_camera = False
 
+        file_path = '/home/alo/Desktop/Data/myauto_cars.csv'
 
-
-        file_path = '/home/alo/PycharmProjects/my_auto/data/data.csv'
-        with open(file_path, 'a') as csvfile:
-            fieldnames = ['Manufacturer',
-                          'Model',
-                          'Year',
-                          'Category',
-                          'Fuel Type',
-                          'Engine Volume',
-                          'Mileage',
-                          'Cylinders',
-                          'Geaer Type',
-                          'Drive Wheels',
-                          'Doors',
-                          'Wheel',
-                          'Color',
-                          'Interior Color',
-                          'Airbags',
-                          'ABS',
-                          'El Windows',
-                          'Air Condintioner',
-                          'Climate System',
-                          'Leather Interior',
-                          'Disks',
-                          'Navigation System',
-                          'Central Lock',
-                          'Hatch',
-                          'Alarm',
-                          'Board Computer',
-                          'Hydraulics',
-                          'Anti skid',
-                          'Chair Warming',
-                          'Parking Control',
-                          'Rear View Camera',
-                          'Price']
-
-            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-            writer.writeheader()
-            writer.writerow({'Manufacturer': manufacturer,
-                             'Model': model,
-                             'Year': year,
-                             'Category':category,
-                             'Fuel Type': fuel_type,
-                             'Engine Volume': engine_volume,
-                             'Mileage': mileage,
-                             'Cylinders':cylinders,
-                             'Model': model,
-                             'Geaer Type': gear_type,
-                             'Drive Wheels':drive_wheels,
-                             'Doors':doors,
-                             'Wheel': wheel,
-                             'Color':color,
-                             'Interior Color':interior_color,
-                             'Airbags':airbags,
-                             'ABS':abs,
-                             'El Windows':el_windows,
-                             'Air Condintioner': air_condintioner,
-                             'Climate System': climate_system,
-                             'Leather Interior': leather_interior,
-                             'Disks': disks,
-                             'Navigation System': navigation_system,
-                             'Central Lock': central_lock,
-                             'Hatch':hatch,
-                             'Alarm': alarm,
-                             'Board Computer': board_computer,
-                             'Hydraulics': hydraulics,
-                             'Anti skid': anti_skid,
-                             'Chair Warming': chair_warming,
-                             'Parking Control': parking_control,
-                             'Rear View Camera': rear_view_camera,
-                             'Price': price})
+        lis = [customs, manufacturer, model, year, category, fuel_type,
+               engine_volume, mileage, cylinders, gear_type, drive_wheels,
+               doors, wheel, color, interior_color, airbags, abs, el_windows,
+               air_condintioner, climate_system, leather_interior, disks,
+               navigation_system, central_lock, hatch, alarm, board_computer,
+               hydraulics, anti_skid, chair_warming, parking_control,
+               rear_view_camera, price]
+        myFile = open(file_path, 'a')
+        with myFile:
+            writer = csv.writer(myFile)
+            writer.writerow(lis)
