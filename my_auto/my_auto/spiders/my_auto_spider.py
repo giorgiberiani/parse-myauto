@@ -62,7 +62,7 @@ class MyAutoScraper(Helper, scrapy.Spider):
 
         urls = []
 
-        for i in range(1,1000):
+        for i in range(1,number_of_pages):
             urls.append('https://www.myauto.ge/ka/search/?stype=0&currency_id=3&det_search=0&ord=1&category_id=m0&page={}'.format(i))
 
         for url in urls:
