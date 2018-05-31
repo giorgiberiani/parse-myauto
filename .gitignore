@@ -1,0 +1,6 @@
+/.scrapy/
+venv/
+.vscode
+.idle/
+*.pyc
+/__pycache__/

@@ -158,5 +158,11 @@ class MyAutoHelper:
             return 1
         else:
             return 0
+
+    def get_id(self):
+        return self.helper_respnse.xpath('//*[@class="number"]/text()').extract_first()
+
+    def get_time(self):
+        return self.helper_respnse.xpath('//*[@class="number"]/text()').extract()[1]
         
 

@@ -1,0 +1,10 @@
+Server: nginx/1.13.10
+Date: Thu, 31 May 2018 14:48:13 GMT
+Content-Type: text/html; charset=UTF-8
+X-Powered-By: PHP/7.2.4
+Expires: Thu, 19 Nov 1981 08:52:00 GMT
+Cache-Control: no-store, no-cache, must-revalidate
+Pragma: no-cache
+Set-Cookie: Lang=ka; expires=Fri, 31-May-2019 14:48:13 GMT; Max-Age=31536000; path=/
+Set-Cookie: Lang=ka; expires=Sat, 30-Jun-2018 14:48:13 GMT; Max-Age=2592000; path=/; secure; HttpOnly
+Content-Encoding: gzip

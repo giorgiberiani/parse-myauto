@@ -3,6 +3,8 @@ from my_auto.items import MyAutoItem
 class ItemHelper:
 
     def make_item(  self,
+                    carid = None,
+                    time = None,
                     customs=None,
                     location = None,
                     manufacturer = None,
@@ -39,7 +41,8 @@ class ItemHelper:
                     price = None,
                     description = None):
         item = MyAutoItem()
-
+        item['carid'] = carid
+        item['time'] = time
         item['customs'] = customs
         item['location'] = location
         item['manufacturer'] = manufacturer
@@ -75,6 +78,7 @@ class ItemHelper:
         item['rear_view_camera'] =rear_view_camera
         item['price'] =price
         item['description'] =description
+        return item
 
 
 

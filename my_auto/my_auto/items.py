@@ -10,6 +10,8 @@ import scrapy
 
 class MyAutoItem(scrapy.Item):
 
+    carid =scrapy.Field()
+    time = scrapy.Field()
     customs = scrapy.Field()
     location = scrapy.Field()
     manufacturer =scrapy.Field()
