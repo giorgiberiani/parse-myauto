@@ -4,7 +4,13 @@ class MyAutoHelper:
     helper_respnse = None
  
     def get_customs(self):
-        return self.helper_respnse.xpath('//*[@class="levy"]//text()').extract_first()
+
+        customs = self.helper_respnse.xpath('//*[@class="levy"]//text()').extract()
+
+        if len(customs) == 0:
+            return 0
+        else:
+            return customs[1]
         
 
     def get_location(self):
@@ -159,10 +165,5 @@ class MyAutoHelper:
         else:
             return 0
 
-    def get_id(self):
-        return self.helper_respnse.xpath('//*[@class="number"]/text()').extract_first()
-
-    def get_time(self):
-        return self.helper_respnse.xpath('//*[@class="number"]/text()').extract()[1]
         
 

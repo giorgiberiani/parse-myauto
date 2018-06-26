@@ -8,7 +8,7 @@ from my_auto.helpers.item_helper import ItemHelper
 class MyAutoScraper(scrapy.Spider, ItemHelper, MyAutoHelper):
     name = 'myauto'
 
-  
+ 
 
     start_url = 'https://www.myauto.ge/ka/search/?stype=0&currency_id=3&det_search=0&ord=1&category_id=m0&page=1'
     page = requests.get(start_url)
@@ -22,7 +22,7 @@ class MyAutoScraper(scrapy.Spider, ItemHelper, MyAutoHelper):
            
         url = 'https://www.myauto.ge/ka/search/?stype=0&currency_id=3&det_search=0&ord=1&category_id=m0&page={}'
 
-        for i in range(1, 10):
+        for i in range(1, 3):
             yield scrapy.Request(url=url.format(i), callback=self.parse)
 
     def parse(self, response):
@@ -40,8 +40,6 @@ class MyAutoScraper(scrapy.Spider, ItemHelper, MyAutoHelper):
             self.helper_respnse = response
             
             item = self.make_item(
-                    carid = self.get_id(),
-                    time = self.get_time(),
                     customs= self.get_customs(),
                     location = self.get_location(),
                     manufacturer = self.get_manufacturer(),
@@ -77,46 +75,7 @@ class MyAutoScraper(scrapy.Spider, ItemHelper, MyAutoHelper):
                     rear_view_camera = self.get_rear_view_camera(),
                     price = self.get_price(),
                     description = self.get_description())
-            # print(item)
+
+        
+   
             yield item
-
-
-    # with open(file_path, 'w') as csvfile:
-    #     fieldnames = ['Customs',
-    #                   'Location',
-    #                   'Manufacturer',
-    #                   'Model',
-    #                   'Year',
-    #                   'Category',
-    #                   'Fuel Type',
-    #                   'Engine Volume',
-    #                   'Mileage',
-    #                   'Cylinders',
-    #                   'Gear Type',
-    #                   'Drive Wheels',
-    #                   'Doors',
-    #                   'Wheel',
-    #                   'Color',
-    #                   'Interior Color',
-    #                   'Airbags',
-    #                   'ABS',
-    #                   'El Windows',
-    #                   'Air Condintioner',
-    #                   'Climate System',
-    #                   'Leather Interior',
-    #                   'Disks',
-    #                   'Navigation System',
-    #                   'Central Lock',
-    #                   'Hatch',
-    #                   'Alarm',
-    #                   'Board Computer',
-    #                   'Hydraulics',
-    #                   'Anti skid',
-    #                   'Chair Warming',
-    #                   'Parking Control',
-    #                   'Rear View Camera',
-    #                   'Price',
-    #                   'Description']
-
-    #     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    #     writer.writeheader()

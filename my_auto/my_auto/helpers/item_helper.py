@@ -41,8 +41,6 @@ class ItemHelper:
                     price = None,
                     description = None):
         item = MyAutoItem()
-        item['carid'] = carid
-        item['time'] = time
         item['customs'] = customs
         item['location'] = location
         item['manufacturer'] = manufacturer
